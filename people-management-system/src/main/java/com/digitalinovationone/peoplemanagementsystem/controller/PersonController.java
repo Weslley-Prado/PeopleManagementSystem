@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.digitalinovationone.peoplemanagementsystem.entity.Person;
+import com.digitalinovationone.peoplemanagementsystem.dto.request.PersonDTO;
 import com.digitalinovationone.peoplemanagementsystem.exceptions.InvalidDataException;
 import com.digitalinovationone.peoplemanagementsystem.service.PersonService;
+
+import jakarta.validation.Valid;
 
 
 
@@ -23,9 +25,9 @@ public class PersonController {
 
 	
 	@PostMapping
-	public ResponseEntity<String> createPerson(@RequestBody Person person) {
+	public ResponseEntity<String> createPerson(@RequestBody @Valid PersonDTO personDTO) {
 	    try {
-	        personService.createPerson(person);
+	        personService.createPerson(personDTO);
 	        return ResponseEntity.status(HttpStatus.CREATED).body("Pessoa criada com sucesso!");
 	    } catch (InvalidDataException e) {
 	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
