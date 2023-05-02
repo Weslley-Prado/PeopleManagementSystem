@@ -8,6 +8,9 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.Valid;
 
 
@@ -27,8 +30,10 @@ public class PersonDTO {
 	@CPF
 	private String cpf;
 	
+	@Valid
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private LocalDate birthDate;
-	
+
     @Valid
     @NotEmpty
 	private List<PhoneDTO> phones;

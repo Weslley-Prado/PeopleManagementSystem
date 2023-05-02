@@ -34,6 +34,7 @@ public class PersonService {
 		}
 		
 		Person person = modelMapper.map(personDTO, Person.class);
+		System.out.println(person.getBirthDate());
 		return personRepository.save(person);
 	}
 }
