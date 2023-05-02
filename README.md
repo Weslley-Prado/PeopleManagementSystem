@@ -5,9 +5,13 @@ Este é um sistema simples de gerenciamento de pessoas que permite as operaçõe
 ## Tecnologias utilizadas
 
 > Java 17
+
 > Spring Boot
+
 > Spring Data JPA
+
 > H2 Database
+
 > ModelMapper
 
 ## Funcionalidades
