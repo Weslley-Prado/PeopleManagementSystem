@@ -9,7 +9,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.Valid;
 
@@ -38,10 +37,7 @@ public class PersonDTO {
     @NotEmpty
 	private List<PhoneDTO> phones;
     
-	public PersonDTO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public PersonDTO() {}
 
 	public PersonDTO(Long id, String firstName, String lastName, String cpf, LocalDate birthDate) {
 		super();
