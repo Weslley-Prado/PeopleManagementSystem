@@ -39,13 +39,14 @@ public class PersonDTO {
     
 	public PersonDTO() {}
 
-	public PersonDTO(Long id, String firstName, String lastName, String cpf, LocalDate birthDate) {
+	public PersonDTO(Long id, String firstName, String lastName, String cpf, LocalDate birthDate,List<PhoneDTO> phones) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.cpf = cpf;
 		this.birthDate = birthDate;
+		this.phones = phones;
 	}
 
 	public Long getId() {
@@ -86,6 +87,14 @@ public class PersonDTO {
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public List<PhoneDTO> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(List<PhoneDTO> phones) {
+		this.phones = phones;
 	}
 	
 	

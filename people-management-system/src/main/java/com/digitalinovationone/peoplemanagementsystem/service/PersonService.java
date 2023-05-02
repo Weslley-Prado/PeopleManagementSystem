@@ -1,15 +1,18 @@
 package com.digitalinovationone.peoplemanagementsystem.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.digitalinovationone.peoplemanagementsystem.dto.request.PersonDTO;
 import com.digitalinovationone.peoplemanagementsystem.entity.Person;
+import com.digitalinovationone.peoplemanagementsystem.entity.Phone;
 import com.digitalinovationone.peoplemanagementsystem.exceptions.InvalidDataException;
 import com.digitalinovationone.peoplemanagementsystem.repository.PersonRepository;
 
@@ -48,5 +51,44 @@ public class PersonService {
 	            .collect(Collectors.toList());
 	    return allPeopleDTO;
 	}
+	
+	public PersonDTO listById(Long id) throws NotFoundException, InvalidDataException {
+	    Optional<Person> optionalPerson = personRepository.findById(id);
+	    if (optionalPerson.isEmpty()) {
+	        throw new InvalidDataException("Pessoa não encontrada");
+	    }
+	    Person person = optionalPerson.get();
+	    PersonDTO personDTO = modelMapper.map(person, PersonDTO.class);
+	    return personDTO;
+	}
+	
+	public PersonDTO update(Long id, PersonDTO personDTO) throws InvalidDataException {
+	    Optional<Person> optionalPerson = personRepository.findById(id);
+	    if (optionalPerson.isEmpty()) {
+	        throw new InvalidDataException("Pessoa não encontrada");
+	    }
+	    Person person = optionalPerson.get();
+	    person.setFirstName(personDTO.getFirstName());
+	    person.setLastName(personDTO.getLastName());
+	    person.setCpf(personDTO.getCpf());
+	    person.setBirthDate(personDTO.getBirthDate());
+
+	    List<Phone> phones = personDTO.getPhones().stream()
+	            .map(phoneDTO -> modelMapper.map(phoneDTO, Phone.class))
+	            .collect(Collectors.toList());
+	    person.setPhones(phones);
+
+	    Person updatedPerson = personRepository.save(person);
+	    return modelMapper.map(updatedPerson, PersonDTO.class);
+	}
+
+	public void delete(Long id) throws InvalidDataException {
+	    Optional<Person> optionalPerson = personRepository.findById(id);
+	    if (optionalPerson.isEmpty()) {
+	        throw new InvalidDataException("Pessoa não encontrada");
+	    }
+	    personRepository.deleteById(id);
+	}
+
 
 }
